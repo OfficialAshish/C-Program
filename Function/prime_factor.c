@@ -13,9 +13,7 @@ int main(){
 void prime_factor(int n){
     printf("\nPrime factors are:\n");
     for(int a=1 ; a<=n && n!=1 ; a++){
-
         if ( n % a==0){
-
             printf("%d\n",a);
             n/=a;
             a=1;

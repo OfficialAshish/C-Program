@@ -18,15 +18,29 @@ void prime_factor(int n,int a)
         if (a>=n && n==1){
             exit(1);
         }
-
         else if ( n % a==0){
-
             printf("%d\n",a);
             n/=a;
             a=2;
         }
         else a++;
-
         return( prime_factor( n, a));
 }
 
+
+
+/*
+// non recursive way
+
+void prime_factor(int n){
+    printf("\nPrime factors are:\n");
+    for(int a=1 ; a<=n && n!=1 ; a++){
+        if ( n % a==0){
+            printf("%d\n",a);
+            n/=a;
+            a=1;
+        }
+    }
+
+}
+ */
