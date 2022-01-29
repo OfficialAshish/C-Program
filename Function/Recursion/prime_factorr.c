@@ -1,4 +1,3 @@
-//recursion 
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -16,7 +15,7 @@ int main(){
 void prime_factor(int n,int a)
     {
         if (a>=n && n==1){
-            exit(1);
+            exit(0);
         }
         else if ( n % a==0){
             printf("%d\n",a);
