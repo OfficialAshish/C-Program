@@ -19,5 +19,5 @@ void fibonacci(int n){
         a=b;
         b=c;
     }
-    printf("\n\n");
+    printf("\n");
 } 
