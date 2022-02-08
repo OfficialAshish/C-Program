@@ -17,7 +17,8 @@ int main(void)
     *(list+1) = 20;
     *(list+2) = 30;
 
-/*     for (int i =0; i<3; i++)
+    /*
+    for (int i =0; i<3; i++)
     {
         printf("List[%d]: %d \n",i,*(list+i));
     } */

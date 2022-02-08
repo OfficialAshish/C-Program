@@ -33,12 +33,15 @@ int main(void)
 
     temp[3]=40;
     temp[4]=50;
-    free(list);
+
+    //if free isnt comment index 0,1 are giving address
+    //free(list);
     for (int j =0; j<5; j++)
     {
-        //printf("List[%d]: %d \n",j, *(temp+j));
-        printf("\t\tSomething diff.List[%d]: %d \n",*(temp+j));
+        printf("List[%d]: %d \n",j, *(temp+j));
+        //printf("\t\tSomething diff.List[%d]: %d \n",*(temp+j));
     }
+    free(list);
     free(temp);
     return 0;
 }
