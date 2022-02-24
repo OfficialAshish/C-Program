@@ -1,4 +1,17 @@
 #include <stdio.h>
+int checkLeapYear(int);
+
+    //fucntion to check leap year sas checkLeapYear
+
+    int checkLeapYear(int i)
+    {
+        if ((i%100==0 && i%400==0 && i!=0) || (i%100!=0 && i%4==0)){
+            return 1;
+        }
+        else return 0;
+    }
+    
+    
 
 int main(){
 
@@ -7,14 +20,6 @@ int main(){
     scanf("%d%d%d",&dd,&mm,&yy);
 
 
-    //fucntion to check leap year sas checkLeapYear
-
-    int checkLeapYear(int i){
-        if ((i%100==0 && i%400==0 && i!=0) || (i%100!=0 && i%4==0)){
-            return 1;
-        }
-        else return 0;
-    }
     int leapYear,counter;
     counter=0;
     leapYear=0;
@@ -128,13 +133,13 @@ int main(){
         tfd+=1;
     }
     
-    printf("\nTotal days till now:\t%ld\n",tfd);
+    //printf("\nTotal days till now:\t%ld\n",tfd);
 
     //getting day now
     int day;
     day=tfd%7 ;
 
-    //printf("\n");
+    printf("\n");
     switch (day){
         case 0:{
             printf("It is Sunday\n");
