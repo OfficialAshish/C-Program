@@ -56,11 +56,11 @@ int main(){
         //terminate program
     }
     else if (dd==29 && mm==2 && checkLeapYear(yy)==0){
-        printf("%d is not a leap year,OR February can\'t be more then 29 days.\n",yy);
+        printf("%d is not a leap year.\n",yy);
         return 0;
         //terminate program
     }
-    else if (dd>31 || mm>12){
+    else if ( mm>12){
         if (mm>12){
             printf("Month cannot be greater then 12\n");
             return 0;
@@ -73,7 +73,6 @@ int main(){
         }
     }
     else if(mm==1 && dd<=31){
-        cyd+=cyd;
         cyd=cyd+dd;
     }
     else if(mm==2 && dd<=28){
@@ -174,7 +173,6 @@ int main(){
         }
 
     }
-    //getchar();
 
     return 0;
 }
