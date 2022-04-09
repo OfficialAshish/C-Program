@@ -2,6 +2,8 @@
 #include <stdlib.h>
 
 int main(void)
+<<<<<<< HEAD
+=======
 {
     char *s={"hello"};
     char str[]={"hello"};
@@ -12,3 +14,4 @@ int main(void)
     printf("%s\n",str);
 }
 
+>>>>>>> 7c24a71e4839533c552e292303be57231e182c4c
