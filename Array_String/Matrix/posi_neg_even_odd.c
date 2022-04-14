@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 int pos();
 int neg();
 void even_odd();
@@ -10,14 +11,17 @@ int main()
     int n;
     printf("Enter Total Numbers : ");
     scanf("%d", &n);
+
+    //getting array
     int num[n];
     printf("\nEnter numbers : ");
     for (int i = 0; i < n; i++)
     {
-        printf("\n");
+        //printf("\n");
         scanf("%d", (num + i));
     }
 
+    //printing original array
     printf("Array is [ ");
     for (int i = 0; i < n; i++)
     {
@@ -31,7 +35,7 @@ int main()
     printf("\nTotal even numbers are %d .", even);
     printf("\nTotal odd numbers are %d .", odd);
     printf("\n Prime numbers are . ");
-    prime(num,n);
+    prime(num, n);
 
     return 0;
 }
@@ -39,23 +43,22 @@ int main()
 int pos(int *p, int n)
 {
     int c = 0;
-    for (int m, i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        m = *(p + i);
-        if (m >= 0)
+        if ((*(p + i)) >= 0)
         {
             c++;
         }
     }
     return c;
 }
+
 int neg(int *p, int n)
 {
     int c = 0;
-    for (int m, i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        m = *(p + i);
-        if (m < 0)
+        if ((*(p + i)) < 0)
         {
             c++;
         }
@@ -64,11 +67,9 @@ int neg(int *p, int n)
 }
 void even_odd(int *p, int n)
 {
-    /*extern int even, odd; */
-    for (int m, i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        m = *(p + i);
-        if (m % 2 == 0)
+        if ((*(p + i)) % 2 == 0)
         {
             even++;
         }
@@ -82,22 +83,24 @@ void prime(int *p, int n)
     printf("\n [ ");
     for (int i = 0; i < n; i++)
     {
-        int new;
-        if ((*(p+i)) <0)
+        int new,j;
+        if ((*(p + i)) < 0)
         {
-            new= (-1)*(*(p+i));
+            new = (-1) * (*(p + i));
         }
-        else new= (*(p+i));
-        for (int j = 1; j < new; j++)
+        else
+            new = (*(p + i));
+
+        for (j = 2; j <= new/2 ; j++)
         {
             if (new % j == 0)
             {
                 break;
             }
-            else if (j < new)
-            {
-                printf("%d, ", *(p + i));
-            }
+        }
+        if (j > new / 2)
+        {
+            printf(" %d, ", *(p + i));
         }
     }
     printf(" ] \n");
