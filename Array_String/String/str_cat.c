@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-void xstrcat(char *t,char *s);
+void xstrcat(char *t, const char *s);
 int main()
 {
     char sstr[20] ;
@@ -12,12 +12,12 @@ int main()
     printf("\nEnter tstr : ");
     scanf("%[^\n]s",tstr);
     xstrcat(tstr,sstr);
-    printf("Concated string is : %s",tstr);
+    printf("\nConcated string is : %s", tstr);
     //printf("%s,,,%s",sstr,tstr);
     return 0;
 }
 
-void xstrcat(char *t , char *s)
+void xstrcat( char *t , const char *s)
 {
     t= (t + strlen(t));
     while ( *s != '\0')

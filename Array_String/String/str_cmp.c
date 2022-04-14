@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <string.h>
+//#include<string.h>
 //#include<stdlib.h>
-#define SIZE1 20
-#define SIZE2 20
+#define SIZE1 40
+#define SIZE2 40
 
-int xstrcmp(char *, char *);
+int xstrcmp(const char *,const char *);
 
 int main()
 {
@@ -12,11 +12,15 @@ int main()
     char str2[SIZE2];
 
     printf("\nEnter string 1 : ");
-    scanf("%[\n]s ", str1);
+    scanf("%[^\n]s ", str1);
     fflush(stdin);
     printf("\nEnter string 2 : ");
-    scanf("%[\n]s ", str2);
+    scanf("%[^\n]s ", str2);
+    
+    //printf("\n str1 : %s\n ", str1);
     int res = xstrcmp(str1, str2);
+    
+    //printf("\n str2 : %s\n ", str2);
     if (res == 0)
     {
         printf("Strings are identical .");
@@ -27,68 +31,34 @@ int main()
     return 0;
 }
 
-int xstrcmp(char *s1 , char *s2 )
+int xstrcmp(const char *s1 , const char *s2 )
 {
     int i=0 ;
-    while ( *(s1++ ) == *(s2++) )
+    //printf("\n%s\n", s1);
+    int res = (*(s1) ) - (*( s2 ));
+    //printf("\n%d\n",res);
+    while ( res==0 )
     {
-        printf("%c",*(s1+i));
-        if (*(s1+i) == "\0" )
+        //printf("\nins : %d\n",res);
+        //printf("\n Str1: %s\n",s1);
+        //printf("\n lens1: %d\n", strlen(s1));
+        if (*(s1) == '\0' )
         {
-            return 0;
+            return res ;
         }
-        i++;
+        res = (*(++s1) ) - (*( ++s2 ));
     }
-    return ( (*(s1+i ) ) - (*( s2+i )) );
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
     
-    int i=0;
-    while ( *(s1 + i) != '\0' )
-    {
-        printf("\n%s , ", *(s1+i));
-        int sub = (*(s1 + i) - *(s2 + i));
-        printf("\n %d , \n",sub);
-        if (sub == 0)
-        {
-            sub=0;
-        }
-        else
-        {
-            return sub;
-        }
-        i++;
-    }
-    return 0;
+    return ( res );
 }
 
-*/
+
+
+/*
+error made in this prgm
+
+"/0" --> '\0'
+[\n]s  -->  [^\n]s
+ 
+ 
+ */
