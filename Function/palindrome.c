@@ -1,34 +1,36 @@
-
 #include <stdio.h>
+#include <string.h>
 
 void main()
 {
 	int n;
-	printf("Enter size(no. of char) of string: ");
-	scanf("%d", &n);
-	char str[n + 1];
-	printf("\nEnter string to check weather it\'s palindrome or not : ");
+	char str[20] ;
+	printf("\nEnter string to check weather it\'s palindrom or not : ");
 	scanf("%s", str);
-	int l = (sizeof(str) - 1), ch = 0, i;
-	int v = (l / 2 - 1);
+	n=strlen(str)  ;
+	//printf("l:%d \n" , n);
+	
+	int i;
+	int v = (n / 2) - 1; //-1 to manage i index of arr
+
 	for (i = 0; i <= v; i++)
 	{
 		//printf("%c", str[i]);
 		//printf("\ni:%d\n", i);
 
-		if (str[i] != str[l - 1 - i])
+		if (str[i] != str[n - 1 - i]) //-1 to manage index
 		{
 			break;
 		}
 	}
-	//printf("%d",i);
+	//printf("\ni:%d\n",i);
 	//i gets increm for failing loop condn
-	if (i -1 == v)
+	if (i - 1 == v)
 	{
-		printf("It\'s Palindrome. ");
+		printf("It\'s Palindrom. ");
 	}
 	else
 	{
-		printf("It\'s not Palindrome. ");
+		printf("It\'s not Palindrom. ");
 	}
 }

@@ -1,42 +1,43 @@
-// data / user / 0 / ru.iiec.cxxdroid / files / sysroot / usr / lib / crtbegin_dynamic.o
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #define SIZE 2
-#define ARRSIZE 9
+#define ARRSIZE 4
 
-void *getString();
+char **getString();
 int arrsize = 0;
 
 //init Array (ARRSIZE)
 //char *arr[ARRSIZE];
+
 /*
+
 int main()
 {
-    char *getAr;
+    char **getAr;
     getAr = getString();
-    //printing array
+    if (getAr == NULL)
+        exit(1);
+    //printing array, ((not working))
+
+    
     printf("   {");
-    for (int i = 0; i < arrsize + 1; i++)
+    for (int i = 0; i < arrsize; i++)
     {
-        printf("\n elem %d : %s", i, *(getAr +i));
-        //printf("\n      %s  ,", *(getAr + i));
-        if (i + 1 == arrsize)
-        {
-            break;
-        }
+        printf("\n Name %d : %s", i+1, *(getAr + i));
     }
     printf(" \n   }");
-
+    
     return 0;
 }
 
 */
-void *getString()
+
+char **getString()
 {
-    char inp = 'y';
-    char *arr[ARRSIZE];
+    char another = 'y';
+    static char *arr[ARRSIZE];
     int i = 0, n = SIZE;
     if (n == 0)
     {
@@ -45,43 +46,41 @@ void *getString()
         fflush(stdin);
     }
     char *p;
-    while (inp == 'y' && i < n)
+    while (another == 'y' && i < n)
     {
-        char temp[50];
+        char temp[40];
         printf("\nEnter name : ");
         arrsize++;
         scanf("%[^\n]s", temp);
         fflush(stdin);
         p = (char *)malloc(strlen(temp + 1));
         strcpy(p, temp);
-        //printf("\n%s", p);
-        arr[arrsize - 1] = p; //free(p);
+        printf("\np:%d\n", strlen(p));
+        arr[arrsize - 1] = p;
         if (i + 1 == n)
         {
             printf("\nWant to enter another name : (y/n ) : ");
-            scanf("%c", &inp);
+            scanf("%c", &another);
             fflush(stdin);
-            if (inp != 'y')
+            if (another != 'y')
             {
                 break;
             }
-            i = -1;
+            i = -1; //in ending while i++, i gets its index =0; for next repeatation
             printf("Enter, how many names you want to insert in array : ");
             scanf("%d", &n);
             fflush(stdin);
         }
         i++;
     }
+    /*
+    //printing array
     printf("   {");
-    for (int i = 0; i < arrsize + 1; i++)
+    for (int i = 0; i < arrsize; i++)
     {
-        printf("\n elem %d : %s", i, *(arr + i));
-        //printf("\n      %s  ,", *(getAr + i));
-        if (i + 1 == arrsize)
-        {
-            break;
-        }
+        printf("\n Name %d : %s", i, *(arr + i));
     }
     printf(" \n   }");
-    //return arr[0];
+    */
+    return arr;
 }
