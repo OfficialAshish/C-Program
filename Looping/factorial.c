@@ -10,7 +10,7 @@ int main(){
     }
 
     int num,ans;
-    printf("Enter factorial upto:\t");
+    printf("Enter num. to get it\'s factorial:  ");
     scanf("%d",&num);
     ans=factorial(num);
     printf("%d\n",ans);
