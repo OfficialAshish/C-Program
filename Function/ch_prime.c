@@ -12,8 +12,8 @@ int main()
         }
     }
     if (i > n / 2)
-        printf("\n % d is a Prime Number\n", n);
+        printf("\n% d is a Prime Number\n", n);
     else
-        printf("\n % d is not a Prime Number\n", n);
+        printf("\n% d is not a Prime Number\n", n);
     return 0;
 }
