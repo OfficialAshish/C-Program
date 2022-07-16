@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #pragma pack(1) // default
 
 #define TOTALCUSTOMER (3 + 97)
@@ -27,7 +28,10 @@ typedef struct bankCustomer
 
 } bca;
 
+//global declaration
 bca customer[TOTALCUSTOMER];
+static int accountIndex;
+
 
 
 int main()
@@ -83,8 +87,7 @@ restart:
 //assigning account number
 int accountNumber(int index)
 {
-    static int accountIndex;
-    int assignNum = 100 + accountIndex;
+    int assignNum = 1000 + accountIndex;
     if (index != accountIndex)
     {
         printf("\nSomething wrong with account number assigning!\n");
@@ -97,6 +100,27 @@ int accountNumber(int index)
     }
 }
 
+//get index of account to perform functions,
+int getAccount()
+{
+    printf("\nGetting Account Details...\n");
+    char tempName[20];
+    int tempAccNum;
+    printf("\nEnter Your Name :  ");
+    scanf("%[^\n]s",tempName);
+    fflush(stdin);
+    printf("\nDear %s , Enter Your Account Number : ", tempName);
+    scanf("%d", tempAccNum);
+
+    int *baseAccount_Num_Add = &(customer[0].acntNumber);
+
+    int index = searchAccount_linear(baseAccount_Num_Add, tempAccNum, accountIndex-1);
+
+    //printf("\nIndex =%d ,\n", index);
+
+    return (index);
+}
+
 //registering new user account
 void registerUser()
 {
@@ -105,26 +129,37 @@ void registerUser()
     char temp[20];
     scanf("%[^\n]s",temp);
     fflush(stdin);
-    
+
+    int index = accountIndex;
+    strcpy(customer[index].acntName, temp);
+    customer[index].acntNumber = accountNumber(index);
+    customer[index].acntBalance = 100.0;
+    printf("\nYEAH! Your account has been created!\n %s, New Account Number is : %d .\n And Curent Balance is : %d. \n", temp,customer[index].acntNumber,customer[index].acntBalance);
+
+    printf("\nEnter anything to continue...");
+    getchar();
+    //return 0;
 }
+
+
 void accountDetail()
 {
+    
+    //printing default customers
+    // for (int i=0; i<3; i++)
+    // {
+    //     printf("\nname=%s , accountNumber=%d , Account Balance = %d, \n", customer[i].acntName, customer[i].acntNumber, customer[i].acntBalance);
+    // }
+
     printf("\nGet your Account Details.\n");
-    printf("\nname=%s , accountNumber=%d , Account Balance = %d, \n", customer[0].acntName, customer[0].acntNumber, customer[0].acntBalance);
-    printf("\nname=%s , accountNumber=%d , Account Balance = %d, \n", customer[1].acntName, customer[1].acntNumber, customer[1].acntBalance);
-    printf("\nname=%s , accountNumber=%d , Account Balance = %d, \n", customer[2].acntName, customer[2].acntNumber, customer[2].acntBalance);
 
-    int *baseAccount_Num_Add = &customer[0].acntNumber;
-    /*
-        for (int i = 0,j=0; i < 7*5; i+=7,j++)
-        {
-            printf("\nmodifing add : %u ,acc.no. : %d, i=%d\n" , (p+i), *(p+i), i);
-            printf("\noriginal add : %u ,acc.no. : %d , j=%d\n" , &customer[j].acntNumber , customer[j].acntNumber , j);
-        }
-         */
+    int index=getAccount();
+    printf("\n\t%s, Your Account Number is : %d .\n And Curent Balance is : %f. \n", customer[index].acntName,customer[index].acntNumber,customer[index].acntBalance);
+    
+    printf("\nEnter anything to continue...");
+    getchar();
+    //return 0;
 
-    int index = searchAccount_linear(baseAccount_Num_Add, 101, 3);
-    printf("\nndex =%d ,\n", index);
 }
 void modifyAccout()
 {
