@@ -6,16 +6,17 @@
 
 #define TOTALCUSTOMER (3 + 97)
 // prototypes
-void registerUser();
-void accountDetail();
-void modifyAccout();
-void deposit_amnt();
-void withdraw_amnt();
-void exitBank();
+int registerUser();
+int accountDetail();
+int forgotAccountNumber();
+int modifyAccout();
+int depositAmmount();
+int withdrawAmmount();
+int exitBank();
 
 int getAccount();
 int accountNumber(int);
-void createTestAccount(int);
+// void createTestAccount(int);
 int searchAccount_binary(int *, int, int);
 int searchAccount_linear(int *, int, int);
 
@@ -28,15 +29,13 @@ typedef struct bankCustomer
 
 } bca;
 
-//global declaration
+// global declaration
 bca customer[TOTALCUSTOMER];
 static int accountIndex;
-
-
+int option = 100;
 
 int main()
 {
-    int option = 0;
 
     // default 3 customers
     strcpy(customer[0].acntName, "Ashish Prajapati");
@@ -51,17 +50,49 @@ int main()
     customer[2].acntNumber = accountNumber(2);
     customer[2].acntBalance = 100.0;
 
-restart:
+    // restart:
     do
     {
-        printf("\nWelcome To Our BANK !\n");
-        printf("\n 1 : Register User. \n 2 : Modify Account. \n 3 : Account Detail. \n 4 : Deposit Ammount. \n 5 : Withdraw Ammount. \n 6 : Exit.\n");
+        if (option == 100)
+        {
+            printf("\n\nWelcome To Our BANK !\n");
+            printf("\n 1 : Register User. \n 2 : Modify Account. \n 3 : Account Detail. \n 4 : Deposit Ammount. \n 5 : Withdraw Ammount. \n 6 : Exit.\n");
+        }
         printf("\nSelect Option : ");
-        scanf("%d", &option);
-        fflush(stdin);
-    } while (option == 0);
 
-    switch (option)
+        scanf("%d", &option);
+
+        fflush(stdin);
+
+        {
+            if (option == 1)
+                option = registerUser();
+
+            else if (option == 2)
+                option = modifyAccout();
+
+            else if (option == 3)
+                option = accountDetail();
+
+            else if (option == 4)
+                option = depositAmmount();
+
+            else if (option == 5)
+                option = withdrawAmmount();
+
+            else if (option == 6)
+                option = exitBank();
+
+            else
+            {
+                printf("%d, Wrong Option Selected! \n", option);
+                fflush(stdin);
+            }
+        }
+    } while (option != (89 || 121)); // 89=Y,121=y
+
+    // printg all execn, after any one execn
+    /* switch (option)
     {
     case 1:
         registerUser();
@@ -80,11 +111,11 @@ restart:
         printf("Wrong Option Selected! \n");
         goto restart;
     }
-    }
+    } */
 }
 
-//FUNCTIONS
-//assigning account number
+// FUNCTIONS
+// assigning account number
 int accountNumber(int index)
 {
     int assignNum = 1000 + accountIndex;
@@ -100,82 +131,148 @@ int accountNumber(int index)
     }
 }
 
-//get index of account to perform functions,
+// get index of account to perform functions,
 int getAccount()
 {
     printf("\nGetting Account Details...\n");
     char tempName[20];
     int tempAccNum;
     printf("\nEnter Your Name :  ");
-    scanf("%[^\n]s",tempName);
+    scanf("%s", tempName);
     fflush(stdin);
     printf("\nDear %s , Enter Your Account Number : ", tempName);
-    scanf("%d", tempAccNum);
+    scanf("%d", &tempAccNum);
 
     int *baseAccount_Num_Add = &(customer[0].acntNumber);
 
-    int index = searchAccount_linear(baseAccount_Num_Add, tempAccNum, accountIndex-1);
+    int index = searchAccount_linear(baseAccount_Num_Add, tempAccNum, accountIndex - 1);
 
-    //printf("\nIndex =%d ,\n", index);
+    printf("\nIndex =%d ,\n", index);
 
     return (index);
 }
 
-//registering new user account
-void registerUser()
+// registering new user account
+int registerUser()
 {
     printf("\nCreating new Account!\n");
-    printf("\nEnter Your Name : \n");
+    printf("\nEnter Your Name : ");
     char temp[20];
-    scanf("%[^\n]s",temp);
+    scanf("%s", temp);
     fflush(stdin);
 
     int index = accountIndex;
     strcpy(customer[index].acntName, temp);
     customer[index].acntNumber = accountNumber(index);
     customer[index].acntBalance = 100.0;
-    printf("\nYEAH! Your account has been created!\n %s, New Account Number is : %d .\n And Curent Balance is : %d. \n", temp,customer[index].acntNumber,customer[index].acntBalance);
+    printf("\nYEAH! Your account has been created! %s ,\nYour New Account Number is : %d .\n And Curent Balance is : %d. \n", temp, customer[index].acntNumber, customer[index].acntBalance);
 
     printf("\nEnter anything to continue...");
-    getchar();
-    //return 0;
+    // getchar();
+    return 100;
 }
 
-
-void accountDetail()
+// check balance
+int accountDetail()
 {
-    
-    //printing default customers
-    // for (int i=0; i<3; i++)
-    // {
-    //     printf("\nname=%s , accountNumber=%d , Account Balance = %d, \n", customer[i].acntName, customer[i].acntNumber, customer[i].acntBalance);
-    // }
+
+    // printing default customers
+    //  for (int i=0; i<3; i++)
+    //  {
+    //      printf("\nname=%s , accountNumber=%d , Account Balance = %d, \n", customer[i].acntName, customer[i].acntNumber, customer[i].acntBalance);
+    //  }
 
     printf("\nGet your Account Details.\n");
 
-    int index=getAccount();
-    printf("\n\t%s, Your Account Number is : %d .\n And Curent Balance is : %f. \n", customer[index].acntName,customer[index].acntNumber,customer[index].acntBalance);
-    
+    int index = getAccount();
+
+    printf("\n\t%s, Your Account Number is : %d .\n And Curent Balance is : %d. \n", customer[index].acntName, customer[index].acntNumber, customer[index].acntBalance);
+
     printf("\nEnter anything to continue...");
-    getchar();
-    //return 0;
 
-}
-void modifyAccout()
-{
-}
-void deposit_amnt()
-{
-}
-void withdraw_amnt()
-{
-
+    return 100;
 }
 
-void exitBank()
+// updating
+int modifyAccout()
 {
-    printf("\nGood-Bye!\n\tThank-You For Using Our Bank!\n\n");
-    exit(1);
+    int index = getAccount();
+
+opt:
+    printf("\nWhat you want to modify/update ?\n 1 : Change Name.\n 2 : Remove Your Account.\n 3 : Abort Modification or Exit. \n\nSelect Option : ");
+    scanf("%d", &option);
+    fflush(stdin);
+    if (option == 1)
+    {
+        printf("\nChanging Account Name!\n");
+        printf("\nEnter Your New Name : \n");
+        char temp[20];
+        scanf("%s", temp);
+        fflush(stdin);
+        strcpy(customer[index].acntName, temp);
+        printf("\nName Changed...\n");
+        return 100;
+    }
+    else if (option == 2)
+    {
+        // customer[index] = {'\0' , 0, 0};
+        strcpy(customer[index].acntName, '\0');
+        customer[index].acntNumber = 0;
+        customer[index].acntBalance = 0;
+        index--;
+        accountIndex--;
+        return 100;
+    }
+    else if (option == 3)
+        return 100;
+    else
+    {
+        printf("\nWrong option selected...Try again\n");
+        goto opt;
+    }
+}
+
+int depositAmmount()
+{
+    forgotAccountNumber();
+    int index = getAccount();
+    int deposit;
+    printf("\n%s, Enter Ammount to Deposit :  ", customer[index].acntName);
+    scanf("%d", &deposit);
+    fflush(stdin);
+    customer[index].acntBalance += deposit;
+    printf("\nYour\'s New Account Balance is : %d.\n", customer[index].acntBalance);
+    return 100;
+}
+int withdrawAmmount()
+{
+    int index = getAccount();
+    int withdraw;
+    printf("\n%s, Enter Ammount to Withdraw :  ", customer[index].acntName);
+    scanf("%d", &withdraw);
+    fflush(stdin);
+    customer[index].acntBalance -= withdraw;
+    printf("\nYour\'s Current Account Balance is : %d.\n", customer[index].acntBalance);
+    return 100;
+}
+
+int exitBank()
+{
+
+    printf("Are you Sure, Want to Exit (y/n)? ...");
+    char exitop[2];
+    // exitop = getchar();
+    scanf("%s", exitop);
+    fflush(stdin);
+    if (strcmp(exitop, "y") == 0)
+    {
+        printf("\n\t\tGood-Bye!\n\tThank-You For Using Our Bank!\n\n");
+        exit(1);
+    }
+    else
+        return 100;
+
+    // exit(0);
 }
 
 int searchAccount_linear(int *bankData, int account_num, int totalAccount)
@@ -188,11 +285,12 @@ int searchAccount_linear(int *bankData, int account_num, int totalAccount)
             printf("\noriginal add : %u ,acc.no. : %d , j=%d\n" , &customer[j].acntNumber , customer[j].acntNumber , j);
         }
          */
+    // printf("\ninside linear search...\n");
 
-    for (int i = 0, index = 0;  i <= (totalAccount *28); i += 7, index++) // 7*4bytes==28bytes
+    for (int i = 0, index = 0; i <= (totalAccount * 28); i += 7, index++) // 7*4bytes==28bytes
     {
 
-        printf("\nAccount:: add : %u ,acc.no. : %d, i=%d\n", (bankData + i), *(bankData + i), i);
+        // printf("\nAccount:: add : %u ,acc.no. : %d, i=%d\n", (bankData + i), *(bankData + i), i);
 
         if (*(bankData + i) == account_num)
         {
@@ -200,6 +298,27 @@ int searchAccount_linear(int *bankData, int account_num, int totalAccount)
         }
     }
     return -1;
+}
+
+// if forgot Accnt num, reset it;
+int forgotAccountNumber()
+{
+    printf("\nResetting Your Account!\n \tVERIYING...\nEnter your name : ");
+    char temp[20];
+    scanf("%s", temp);
+    char *p;
+    for (int i = 0; i <= accountIndex; i++)
+    {
+        p = &customer[i].acntName;
+        printf("\n%s\n", p);
+        if (strcmp(p, temp) == 0)
+        {
+            printf("\nAccount Found! \nAccount No. is : %d ,\n", customer[i].acntNumber);
+            return 100;
+        }
+    }
+    printf("\nAccount is not Found!...\n");
+    return 100;
 }
 
 /*
