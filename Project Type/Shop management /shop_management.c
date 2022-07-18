@@ -6,7 +6,7 @@
 //#define MAX_SERIALNUM (26*26)
 #define PROD_SER_SZ (COMPANY_SER_SZ + 4 + 1)
 //(AB)DP84, 67600 diffrnt products for each company
-
+#define TOT_COMP (200)
 #define TOT_PROD_UNQ (700)
 // 676*6bytes
 #define TOT_PROD_QUANT (300)
@@ -36,7 +36,7 @@ struct quantity
     int quantityIndex; // total num of quantity present for unique prod
 };
 
-typedef struct single_productInfo
+typedef struct unique_productInfo
 {
     char productName[30];
     s_company productCompany; // its caste & series it belongs
@@ -60,9 +60,11 @@ typedef struct single_productInfo
 
 // Global Declaration..
 
-s_productInfo totalProducts[TOT_PROD_UNQ]; // Each type
+s_productInfo productInfo[TOT_PROD_UNQ]; // Each
+// s_company comapanyInfo[TOT_COMP];
 
-int productIndex;
+static int productIndex = 1; // total unique prod present till for each individual company
+// static int comapanyIndex;
 
 // char *seriesPointer;
 
@@ -79,39 +81,43 @@ int getAllProductDetail();
 int getAllProductSerial();
 int getCompnsProdSerial(); // serial for diffrnt prod for particular company
 
-int createProduct_test(int);
+int addProduct_auto(int);
+int addproduct();
 
+// main function..
 int main()
 {
     // default example products..
 
-    strcpy(totalProducts[0].productName, "LG Laptop");
+    strcpy(productInfo[productIndex].productName, "LG Laptop");
 
-    strcpy(totalProducts[0].productCompany.companyName, "Pvt. LG Limited");
+    strcpy(productInfo[productIndex].productCompany.companyName, "Pvt. LG Limited");
 
-    strcpy(totalProducts[0].productCompany.companySeries, "AA");
+    strcpy(productInfo[productIndex].productCompany.companySeries, "AA");
 
-    strcpy(totalProducts[0].productSeries[0], uniqueProductSerialAssign(0));
+    strcpy(productInfo[productIndex].productSeries[productIndex], uniqueProductSerialAssign(productIndex));
 
-    totalProducts[0].productCompany.companyRating = 7;
+    productInfo[productIndex].productCompany.companyRating = 7;
 
-    totalProducts[0].productPrice = 34000;
-    // totalProducts[0].productQuantity.quantityIndex ;
-    totalProducts[0].productRating = 4;
+    productInfo[productIndex].productPrice = 34000;
+    // productInfo[0].productQuantity.quantityIndex ;
+    productInfo[productIndex].productRating = 4;
 
-    totalProducts[0].manufactureDate.dd = 2;
-    totalProducts[0].manufactureDate.mm = 4;
-    totalProducts[0].manufactureDate.yy = 2022;
+    productInfo[productIndex].manufactureDate.dd = 2;
+    productInfo[productIndex].manufactureDate.mm = 4;
+    productInfo[productIndex].manufactureDate.yy = 2022;
 
-    //strcpy(totalProducts[1].productCompany.companySeries, "AB");
-    strcpy(totalProducts[0].productSeries[1], uniqueProductSerialAssign(0));
-    // strcpy( totalProducts[1].productSeries[1] , uniqueProductSerialAssign(1));
+    productIndex++;
 
-    // printf("\nprice:%d, \n quantity=%d, \n " , totalProducts[0].productPrice ,totalProducts[0].productQuantity );
+    // strcpy(productInfo[1].productCompany.companySeries, "AB");
+    //  strcpy(productInfo[0].productSeries[1], uniqueProductSerialAssign(0));
+    //  strcpy( productInfo[1].productSeries[1] , uniqueProductSerialAssign(1));
 
-    // printf("\nprice:%d, \n quantity=%d, \n date=%d,%d,%d ,rat=%d, series=%s,,%s \n company name=%s,\n", totalProducts[0].productPrice, totalProducts[0].productQuantity, totalProducts[0].manufactureDate.dd, totalProducts[0].manufactureDate.mm, totalProducts[0].manufactureDate.yy, totalProducts[0].productCompany.companyRating, totalProducts[0].productCompany.companySeries,totalProducts[1].productSeries , totalProducts[0].productCompany.companyName);
+    // printf("\nprice:%d, \n quantity=%d, \n " , productInfo[0].productPrice ,productInfo[0].productQuantity );
 
-    printf("\n%s\n%s\n", totalProducts[0].productSeries[0], totalProducts[0].productSeries[1]);
+    // printf("\nprice:%d, \n quantity=%d, \n date=%d,%d,%d ,rat=%d, series=%s,,%s \n company name=%s,\n", productInfo[0].productPrice, productInfo[0].productQuantity, productInfo[0].manufactureDate.dd, productInfo[0].manufactureDate.mm, productInfo[0].manufactureDate.yy, productInfo[0].productCompany.companyRating, productInfo[0].productCompany.companySeries,productInfo[1].productSeries , productInfo[0].productCompany.companyName);
+
+    // printf("\n%s\n%s\n", productInfo[0].productSeries[0], productInfo[0].productSeries[1]);
 
     return 0;
 }
@@ -120,7 +126,38 @@ int main()
 
 char *uniqueCompanySerialAssign(int index)
 {
+    char v01 = 'A', v02 = 'A';
     static char tempSer[3];
+
+    if (comapanyIndex <= TOT_COMP)
+    {
+        sprintf(tempSer, "%c%c", v01, v02);
+
+        // Requirements for next serial assignments...UPDATING!
+
+        comapanyIndex++;
+
+        if (v01 < 90)
+        {
+            v01++;
+        }
+        else if (v01 == 90 && v02 < 90)
+        {
+            v02++;
+            v01 = 'A';
+        }
+        else if (v01 == 90 && v02 == 90)
+        {
+            printf("\nCompany Series Assignment is Full, Cannot Assign more!...Aborting\n");
+            return 100;
+        }
+        else
+        {
+            printf("\nSomething wrong in company serial assignment... Aborting!...\n");
+            return 100;
+        }
+    }
+    return tempSer;
 }
 
 char *uniqueProductSerialAssign(int index)
@@ -129,13 +166,13 @@ char *uniqueProductSerialAssign(int index)
     char v4 = 'A';
     static int v3, v2, v1;
 
-    if (totalProducts[index].productQuantity.quantityIndex <= TOT_PROD_QUANT)
+    if (productInfo[index].productQuantity.quantityIndex <= TOT_PROD_QUANT)
     {
-        sprintf(tempSerial, "%s%c%d%d%d", totalProducts[index].productCompany.companySeries, v4, v3, v2, v1);
+        sprintf(tempSerial, "%s%c%d%d%d", productInfo[index].productCompany.companySeries, v4, v3, v2, v1);
 
         // Requirements for next serial assignments...UPDATING!
 
-        totalProducts[index].productQuantity.quantityIndex += 1;
+        productInfo[index].productQuantity.quantityIndex += 1;
 
         if (v1 < 9)
             v1++;
@@ -146,26 +183,123 @@ char *uniqueProductSerialAssign(int index)
                 v2++;
                 v1 = 0;
             }
-            if ((v2 == 9) && (v3 < 9))
+            else if ((v2 == 9) && (v3 < 9))
             {
                 v3++;
                 v2 = 0;
                 v1 = 0;
             }
-            if ((v3 == 9) && (v4 < 90))
+            else if ((v3 == 9) && (v4 < 90))
             {
                 v1++;
                 v2 = 0;
                 v3 = 0;
                 v1 = 0;
             }
-            if ((v1 == 9) && (v2 == 9) && (v3 == 9) && (v4 == 90))
+            else if ((v1 == 9) && (v2 == 9) && (v3 == 9) && (v4 == 90))
             {
-                printf("Series Assignment is Full, Cannot Assign more!...Aborting");
-                exit(10);
+                printf("\nSeries Assignment is Full, Cannot Assign more!...Aborting\n");
+                return 100;
+            }
+            else
+            {
+                printf("\nSomething wrong in company serial assignment... Aborting!...\n");
+                return 100;
             }
         }
     }
 
     return tempSerial;
+}
+
+int addproduct()
+{
+    printf("\nAdding Product... \n\n");
+    int condition = 0;
+    short int condition_1 = 0;
+
+    char tempCompName[15], tempProdName[20];
+    // static int newProductIndex;
+
+    do
+    {
+
+        // printf("\n1: Add Product by Company...\n2: Add Product Individually...\n3: Exit!\nSelect Option : ");
+
+        printf("\n1: Add Product Individually...\n2: Exit!\nSelect Option : ");
+
+        if (condition == 1)
+        {
+        again:
+            printf(("\nWant to 1: Enter or 2: Select Company Name?? or Press Enter to Skip...\n"));
+            scanf("%d", &condition_1);
+            fflush(stdin);
+
+            if (condition_1 == 1)
+            {
+                printf("\nEnter Company Name : \n");
+                scanf("%s", tempCompName);
+                fflush(stdin);
+                strcpy(productInfo[productIndex].productCompany.companyName, tempName);
+            }
+            else if (condition_1 == 2)
+            {
+                if (productIndex > 0)
+                {
+                    int i;
+                    for (i = 1; i < productIndex; i++)
+                    {
+                        printf("\nCompanies Names Are: \n");
+                        printf("\n\t\t%d : %s ,\n", i, productInfo[i].productCompany.companyName);
+                    }
+                    printf("\nSelect Company Name :");
+                    scanf("%d", &i);
+                    fflush(stdin);
+                    strcpy(productInfo[productIndex].productCompany.companyName, productInfo[i].productCompany.companyName);
+                    printf("\nC_Done\n");
+                }
+                else
+                {
+                    printf("\nNo Company to Show!...Add some.\n");
+                }
+            }
+            else
+            {
+                printf("WARNING!...Company Name Required For Expected Product Serial No.");
+                char cn = 'y';
+                printf("Want to still Skip...Y/N or Enter to skip...");
+                scanf("%d", &cn);
+                fflush(stdin);
+                if (cn == 110 || cn == 78)
+                {
+                    goto again;
+                }
+                else
+                {
+                    printf("\nOkay!\n");
+                }
+            }
+
+
+            printf("\nEnter Product Name : \n");
+            scanf("%s", tempProdName);
+            fflush(stdin);
+            strcpy(productInfo[productIndex].productName, tempProdName);
+
+            strcpy(productInfo[productIndex].productCompany.companySeries, uniqueCompanySerialAssign(productIndex));
+
+            strcpy(productInfo[productIndex].productSeries[productIndex], uniqueProductSerialAssign(productIndex));
+
+            productInfo[productIndex].productCompany.companyRating = 7;
+
+            productInfo[productIndex].productPrice = 34000;
+
+            productInfo[productIndex].productRating = 4;
+
+            productInfo[productIndex].manufactureDate.dd = 2;
+            productInfo[productIndex].manufactureDate.mm = 4;
+            productInfo[productIndex].manufactureDate.yy = 2022;
+        }
+
+    } while (condition != 3);
 }
