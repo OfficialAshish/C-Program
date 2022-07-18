@@ -20,7 +20,9 @@ int main()
     // int c = func2(a);
     // func1();
     // func2(a);
-    printf("\nInside main3, a=%d ,\n", 'N');
+    char a;
+    scanf("%c" , &a);
+    printf("\nInside main3, a=%d ,\n", a);
     // printf("\nInside main3, c=%d ,\n", c);
     return 0;
 }

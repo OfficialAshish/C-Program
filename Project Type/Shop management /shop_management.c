@@ -64,7 +64,7 @@ s_productInfo productInfo[TOT_PROD_UNQ]; // Each
 // s_company comapanyInfo[TOT_COMP];
 
 static int productIndex = 1; // total unique prod present till for each individual company
-// static int comapanyIndex;
+static int comapanyIndex;
 
 // char *seriesPointer;
 
@@ -108,6 +108,8 @@ int main()
     productInfo[productIndex].manufactureDate.yy = 2022;
 
     productIndex++;
+
+    addproduct();
 
     // strcpy(productInfo[1].productCompany.companySeries, "AB");
     //  strcpy(productInfo[0].productSeries[1], uniqueProductSerialAssign(0));
@@ -216,33 +218,36 @@ int addproduct()
 {
     printf("\nAdding Product... \n\n");
     int condition = 0;
-    short int condition_1 = 0;
+    int tempNum = 0;
+    short int subCondition_1 = 0;
+    char cond_yn = 'n';
 
     char tempCompName[15], tempProdName[20];
     // static int newProductIndex;
 
-    do
+    while (condition != 3)
     {
 
         // printf("\n1: Add Product by Company...\n2: Add Product Individually...\n3: Exit!\nSelect Option : ");
-
+        //company details related to product
         printf("\n1: Add Product Individually...\n2: Exit!\nSelect Option : ");
 
+        scanf("%d", &condition);
         if (condition == 1)
         {
         again:
-            printf(("\nWant to 1: Enter or 2: Select Company Name?? or Press Enter to Skip...\n"));
-            scanf("%d", &condition_1);
+            printf(("\nWant to ...\n1: Enter or 2: Select Company Name?? or Press Enter to Skip...\n"));
+            scanf("%d", &subCondition_1);
             fflush(stdin);
 
-            if (condition_1 == 1)
+            if (subCondition_1 == 1)
             {
                 printf("\nEnter Company Name : \n");
                 scanf("%s", tempCompName);
                 fflush(stdin);
-                strcpy(productInfo[productIndex].productCompany.companyName, tempName);
+                strcpy(productInfo[productIndex].productCompany.companyName, tempCompName);
             }
-            else if (condition_1 == 2)
+            else if (subCondition_1 == 2)
             {
                 if (productIndex > 0)
                 {
@@ -258,6 +263,25 @@ int addproduct()
                     strcpy(productInfo[productIndex].productCompany.companyName, productInfo[i].productCompany.companyName);
                     printf("\nC_Done\n");
                 }
+                else if (subCondition_1 == 1 || subCondition_1 == 2)
+                {
+                    printf("\nWant to give Rating to product? ...Y/N or Press Enter to Skip!: ");
+                    scanf("%c", &cond_yn);
+                    fflush(stdin);
+
+                    if ((cond_yn == 89) || (cond_yn == 121))
+                    {
+                        scanf("%d", &tempNum);
+                        fflush(stdin);
+                        productInfo[productIndex].productCompany.companyRating = tempNum;
+                    }
+                    else
+                    {
+                        productInfo[productIndex].productCompany.companyRating = 7;
+                        printf("\nDefault set to 7 out of 10..\n");
+                    }
+                }
+
                 else
                 {
                     printf("\nNo Company to Show!...Add some.\n");
@@ -265,12 +289,13 @@ int addproduct()
             }
             else
             {
+                // company name for each product
                 printf("WARNING!...Company Name Required For Expected Product Serial No.");
-                char cn = 'y';
+                // char cn = 'y';
                 printf("Want to still Skip...Y/N or Enter to skip...");
-                scanf("%d", &cn);
+                scanf("%c", &cond_yn);
                 fflush(stdin);
-                if (cn == 110 || cn == 78)
+                if (cond_yn == 110 || cond_yn == 78)
                 {
                     goto again;
                 }
@@ -280,26 +305,66 @@ int addproduct()
                 }
             }
 
-
+            //product name
             printf("\nEnter Product Name : \n");
             scanf("%s", tempProdName);
             fflush(stdin);
             strcpy(productInfo[productIndex].productName, tempProdName);
 
+
             strcpy(productInfo[productIndex].productCompany.companySeries, uniqueCompanySerialAssign(productIndex));
 
             strcpy(productInfo[productIndex].productSeries[productIndex], uniqueProductSerialAssign(productIndex));
 
-            productInfo[productIndex].productCompany.companyRating = 7;
+            // rating
+            printf("\nWant to give Rating to product? ...Y/N or Press Enter to Skip!: ");
+            scanf("%c", &cond_yn);
+            fflush(stdin);
 
-            productInfo[productIndex].productPrice = 34000;
+            if ((cond_yn == 89) || (cond_yn == 121))
+            {
+                scanf("%d", &tempNum);
+                fflush(stdin);
+                productInfo[productIndex].productRating = tempNum;
+            }
+            else
+            {
+                productInfo[productIndex].productRating = 7;
+                printf("\nDefault set to 7 out of 10..\n");
+            }
 
-            productInfo[productIndex].productRating = 4;
+            //set price
+            printf("\nEnter Price : \n");
+            scanf("%d", &tempNum);
+            productInfo[productIndex].productPrice = tempNum;
 
-            productInfo[productIndex].manufactureDate.dd = 2;
-            productInfo[productIndex].manufactureDate.mm = 4;
-            productInfo[productIndex].manufactureDate.yy = 2022;
+            //expiry date
+            printf("\nWant to give Expiry date to product? ...Y/N or Press Enter to Skip!: ");
+            scanf("%c", &cond_yn);
+            fflush(stdin);
+
+            short int td = 0, tm = 0, ty = 0;
+            if ((cond_yn == 89) || (cond_yn == 121))
+            {
+                printf("\nEnter Expiry Date \%(dd mm yy) :");
+                scanf("%d%d%d", &td, &tm, &ty);
+                fflush(stdin);
+                productInfo[productIndex].manufactureDate.dd = td;
+                productInfo[productIndex].manufactureDate.mm = tm;
+                productInfo[productIndex].manufactureDate.yy = ty;
+            }
+            else
+            {
+                productInfo[productIndex].manufactureDate.dd = td;
+                productInfo[productIndex].manufactureDate.mm = tm;
+                productInfo[productIndex].manufactureDate.yy = ty;
+                printf("\nDefault set to 0 0 0...\n");
+            }
+            printf("\nDude, %d\'th Product Added Successfully! .\n" , productIndex);
+            productIndex++;
         }
-
-    } while (condition != 3);
+        printf("\n%d ,Wrong Option Selected! Try Again...\n", condition);
+        fflush(stdin);
+    }
+    return 0;
 }
