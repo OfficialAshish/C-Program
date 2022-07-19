@@ -51,8 +51,9 @@ char **getString()
         char temp[40];
         printf("\nEnter name : ");
         arrsize++;
-        scanf("%[^\n]s", temp);
-        fflush(stdin);
+        // scanf("%[^\n]s", temp);
+        // fflush(stdin);
+        gets(temp);
         p = (char *)malloc(strlen(temp + 1));
         strcpy(p, temp);
         printf("\np:%d\n", strlen(p));
@@ -60,8 +61,9 @@ char **getString()
         if (i + 1 == n)
         {
             printf("\nWant to enter another name : (y/n ) : ");
-            scanf("%c", &another);
-            fflush(stdin);
+            // scanf("%c", &another);
+            another = getchar();
+            // fflush(stdin);
             if (another != 'y')
             {
                 break;
@@ -69,7 +71,7 @@ char **getString()
             i = -1; //in ending while i++, i gets its index =0; for next repeatation
             printf("Enter, how many names you want to insert in array : ");
             scanf("%d", &n);
-            fflush(stdin);
+            // fflush(stdin);
         }
         i++;
     }

@@ -128,7 +128,7 @@ int main()
 
 char *uniqueCompanySerialAssign(int index)
 {
-    char v01 = 'A', v02 = 'A';
+    static char v01 = 'A', v02 = 'A';
     static char tempSer[3];
 
     if (comapanyIndex <= TOT_COMP)
@@ -151,12 +151,14 @@ char *uniqueCompanySerialAssign(int index)
         else if (v01 == 90 && v02 == 90)
         {
             printf("\nCompany Series Assignment is Full, Cannot Assign more!...Aborting\n");
-            return 100;
+            // return 100;
+            exit(9);
         }
         else
         {
             printf("\nSomething wrong in company serial assignment... Aborting!...\n");
-            return 100;
+            // return 100;
+            exit(9);
         }
     }
     return tempSer;
@@ -165,16 +167,17 @@ char *uniqueCompanySerialAssign(int index)
 char *uniqueProductSerialAssign(int index)
 {
     static char tempSerial[7];
-    char v4 = 'A';
+    static char v4 = 'A';
     static int v3, v2, v1;
 
-    if (productInfo[index].productQuantity.quantityIndex <= TOT_PROD_QUANT)
+    if (productInfo[productIndex].productQuantity.quantityIndex <= TOT_PROD_QUANT)
     {
-        sprintf(tempSerial, "%s%c%d%d%d", productInfo[index].productCompany.companySeries, v4, v3, v2, v1);
+        sprintf(tempSerial, "%s%c%d%d%d", productInfo[productIndex].productCompany.companySeries, v4, v3, v2, v1);
 
+        printf("\nprodser: %s\n", tempSerial);
         // Requirements for next serial assignments...UPDATING!
 
-        productInfo[index].productQuantity.quantityIndex += 1;
+        productInfo[productIndex].productQuantity.quantityIndex += 1;
 
         if (v1 < 9)
             v1++;
@@ -201,12 +204,14 @@ char *uniqueProductSerialAssign(int index)
             else if ((v1 == 9) && (v2 == 9) && (v3 == 9) && (v4 == 90))
             {
                 printf("\nSeries Assignment is Full, Cannot Assign more!...Aborting\n");
-                return 100;
+                // return 100;
+                exit(10);
             }
             else
             {
                 printf("\nSomething wrong in company serial assignment... Aborting!...\n");
-                return 100;
+                // return 100;
+                exit(10);
             }
         }
     }
@@ -216,20 +221,20 @@ char *uniqueProductSerialAssign(int index)
 
 int addproduct()
 {
-    printf("\nAdding Product... \n\n");
+    printf("\nAdding Product... \n");
     int condition = 0;
     int tempNum = 0;
     short int subCondition_1 = 0;
-    char cond_yn = 'n';
+    char cond_yn = 'y';
 
     char tempCompName[15], tempProdName[20];
     // static int newProductIndex;
 
-    while (condition != 3)
+    do
     {
 
         // printf("\n1: Add Product by Company...\n2: Add Product Individually...\n3: Exit!\nSelect Option : ");
-        //company details related to product
+        // company details related to product
         printf("\n1: Add Product Individually...\n2: Exit!\nSelect Option : ");
 
         scanf("%d", &condition);
@@ -237,14 +242,16 @@ int addproduct()
         {
         again:
             printf(("\nWant to ...\n1: Enter or 2: Select Company Name?? or Press Enter to Skip...\n"));
+            // fflush(stdin);
             scanf("%d", &subCondition_1);
-            fflush(stdin);
+            // fflush(stdin);
 
             if (subCondition_1 == 1)
             {
                 printf("\nEnter Company Name : \n");
-                scanf("%s", tempCompName);
-                fflush(stdin);
+                // scanf("%s", tempCompName);
+                // fflush(stdin);
+                gets(tempCompName);
                 strcpy(productInfo[productIndex].productCompany.companyName, tempCompName);
             }
             else if (subCondition_1 == 2)
@@ -259,29 +266,10 @@ int addproduct()
                     }
                     printf("\nSelect Company Name :");
                     scanf("%d", &i);
-                    fflush(stdin);
+                    // fflush(stdin);
                     strcpy(productInfo[productIndex].productCompany.companyName, productInfo[i].productCompany.companyName);
                     printf("\nC_Done\n");
                 }
-                else if (subCondition_1 == 1 || subCondition_1 == 2)
-                {
-                    printf("\nWant to give Rating to product? ...Y/N or Press Enter to Skip!: ");
-                    scanf("%c", &cond_yn);
-                    fflush(stdin);
-
-                    if ((cond_yn == 89) || (cond_yn == 121))
-                    {
-                        scanf("%d", &tempNum);
-                        fflush(stdin);
-                        productInfo[productIndex].productCompany.companyRating = tempNum;
-                    }
-                    else
-                    {
-                        productInfo[productIndex].productCompany.companyRating = 7;
-                        printf("\nDefault set to 7 out of 10..\n");
-                    }
-                }
-
                 else
                 {
                     printf("\nNo Company to Show!...Add some.\n");
@@ -290,11 +278,13 @@ int addproduct()
             else
             {
                 // company name for each product
-                printf("WARNING!...Company Name Required For Expected Product Serial No.");
+                printf("\nWARNING!...Company Name Required For Expected Product Serial No.\n");
                 // char cn = 'y';
-                printf("Want to still Skip...Y/N or Enter to skip...");
-                scanf("%c", &cond_yn);
-                fflush(stdin);
+                printf("\nWant to still Skip...Y/N or Enter to skip...");
+                // fflush(stdin);
+                // scanf("%c", &cond_yn);
+                cond_yn = getchar();
+                // fflush(stdin);
                 if (cond_yn == 110 || cond_yn == 78)
                 {
                     goto again;
@@ -305,12 +295,32 @@ int addproduct()
                 }
             }
 
-            //product name
-            printf("\nEnter Product Name : \n");
-            scanf("%s", tempProdName);
+            // rating products
+            printf("\nWant to give Rating to product? ...Y/N or Press Enter to Skip!: ");
             fflush(stdin);
-            strcpy(productInfo[productIndex].productName, tempProdName);
 
+            // scanf("%c", &cond_yn);
+            // fflush(stdin);
+            cond_yn = getchar();
+
+            if ((cond_yn == 89) || (cond_yn == 121))
+            {
+                scanf("%d", &tempNum);
+                fflush(stdin);
+                productInfo[productIndex].productCompany.companyRating = tempNum;
+            }
+            else
+            {
+                productInfo[productIndex].productCompany.companyRating = 7;
+                printf("\nDefault set to 7 out of 10..\n");
+            }
+
+            // product name
+            printf("\nEnter Product Name : \n");
+            // scanf("%s", tempProdName);
+            gets(tempProdName);
+            // fflush(stdin);
+            strcpy(productInfo[productIndex].productName, tempProdName);
 
             strcpy(productInfo[productIndex].productCompany.companySeries, uniqueCompanySerialAssign(productIndex));
 
@@ -318,13 +328,15 @@ int addproduct()
 
             // rating
             printf("\nWant to give Rating to product? ...Y/N or Press Enter to Skip!: ");
-            scanf("%c", &cond_yn);
-            fflush(stdin);
+            // scanf("%c", &cond_yn);
+            // fflush(stdin);
+            cond_yn = getchar();
 
             if ((cond_yn == 89) || (cond_yn == 121))
             {
+                printf("\nEnter Rating out of 10 : ");
                 scanf("%d", &tempNum);
-                fflush(stdin);
+                // fflush(stdin);
                 productInfo[productIndex].productRating = tempNum;
             }
             else
@@ -333,20 +345,22 @@ int addproduct()
                 printf("\nDefault set to 7 out of 10..\n");
             }
 
-            //set price
+            // set price
             printf("\nEnter Price : \n");
             scanf("%d", &tempNum);
             productInfo[productIndex].productPrice = tempNum;
 
-            //expiry date
+            // expiry date
             printf("\nWant to give Expiry date to product? ...Y/N or Press Enter to Skip!: ");
-            scanf("%c", &cond_yn);
-            fflush(stdin);
+            // fflush(stdin);
+            // scanf("%c", &cond_yn);
+            // fflush(stdin);
+            cond_yn = getchar();
 
             short int td = 0, tm = 0, ty = 0;
             if ((cond_yn == 89) || (cond_yn == 121))
             {
-                printf("\nEnter Expiry Date \%(dd mm yy) :");
+                printf("\nEnter Expiry Date (dd mm yy) :");
                 scanf("%d%d%d", &td, &tm, &ty);
                 fflush(stdin);
                 productInfo[productIndex].manufactureDate.dd = td;
@@ -360,11 +374,24 @@ int addproduct()
                 productInfo[productIndex].manufactureDate.yy = ty;
                 printf("\nDefault set to 0 0 0...\n");
             }
-            printf("\nDude, %d\'th Product Added Successfully! .\n" , productIndex);
+            printf("\nDude, %d\'th Product Added Successfully! .\n", productIndex);
+
+            printf("\nPrinting Product...\n");
+            printf("\nprod_name: %s ,price:%d, \n quantity=%d, \n date=%d,%d,%d ,rat=%d, series=%s,,%s \n company name=%s,\n", productInfo[productIndex].productName, productInfo[productIndex].productPrice, productInfo[productIndex].productQuantity.quantityIndex, productInfo[productIndex].manufactureDate.dd, productInfo[productIndex].manufactureDate.mm, productInfo[productIndex].manufactureDate.yy, productInfo[productIndex].productCompany.companyRating, productInfo[productIndex].productCompany.companySeries, productInfo[productIndex-1].productSeries, productInfo[productIndex].productCompany.companyName);
+
             productIndex++;
         }
-        printf("\n%d ,Wrong Option Selected! Try Again...\n", condition);
+        else if (condition == 2)
+        {
+            printf("\nExiting!...\n");
+            return 100;
+        }
+        else
+        {
+            printf("\n%d ,Wrong Option Selected! Try Again...\n", condition);
+        }
         fflush(stdin);
-    }
-    return 0;
+    } while (condition != 2);
+
+    return 100;
 }

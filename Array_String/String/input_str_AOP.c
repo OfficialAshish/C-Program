@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#define INPSIZE 0
+#define INPSIZE 3
 #define ARRSIZE 1
 
 void *getString();
@@ -35,7 +35,6 @@ void *getString()
     {
         printf("Enter, how many names you want to insert in array : ");
         scanf("%d", &n);
-        fflush(stdin);
     }
     char *p;
     while (inp == 'y' && i < n)
@@ -43,8 +42,9 @@ void *getString()
         char temp[50];
         printf("\nEnter name : ");
         arrsize++;
-        scanf("%[^\n]s", temp);
-        fflush(stdin);
+        // scanf("%[^\n]s", temp);
+        // fflush(stdin);
+        gets(temp);
         p = (char *)malloc(strlen(temp + 1));
         strcpy(p, temp);
         //printf("\n%s", p);
@@ -54,8 +54,9 @@ void *getString()
         {
             printf("\nWant to enter another name : (y/n ) : ");
 
-            scanf("%c", &inp);
-            fflush(stdin);
+            // scanf("%c", &inp);
+            inp = getchar();
+            // fflush(stdin);
             if (inp != 'y')
             {
                 break;
@@ -67,5 +68,5 @@ void *getString()
         }
         i++;
     }
-    free(p);
+    
 }
