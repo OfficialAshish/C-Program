@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -6,16 +7,16 @@
 
 #define TOTALCUSTOMER (3 + 97)
 // prototypes
-int registerUser();
-int accountDetail();
+void registerUser();
+void accountDetail();
+void depositAmount();
+void withdrawAmount();
 int forgotAccountNumber();
 int modifyAccout();
-int depositAmount();
-int withdrawAmount();
 int exitBank();
 
 int getAccount();
-int accountNumber(int);//69010**;
+int accountNumber(int); // 69010**;
 // char getString();//for multistring(full_name)
 //  void createTestAccount(int);
 int searchAccount_binary(int *, int, int);
@@ -54,70 +55,49 @@ int main()
     // restart:
     do
     {
-        if (option == 100)
-        {
-            printf("\n\nWelcome To Our BANK !\n");
-            printf("\n 1 : Register User. \n\n 2 : Modify Account. \n\n 3 : Account Detail. \n\n 4 : Deposit Amount. \n\n 5 : Withdraw Amount. \n\n 6 : Forgot Account Number, Reset!. \n\n 7 : Exit.\n");
-        }
+        printf("\n\nWelcome To Our BANK !\n");
+        printf("\n 1 : Register User. \n\n 2 : Modify Account. \n\n 3 : Account Detail. \n\n 4 : Deposit Amount. \n\n 5 : Withdraw Amount. \n\n 6 : Forgot Account Number, Reset!. \n\n 7 : Exit.\n");
+
         printf("\nSelect Option : ");
 
         scanf("%d", &option);
 
-        fflush(stdin);
+        // fflush(stdin);
+        getchar();
 
+        switch (option)
         {
-            if (option == 1)
-                option = registerUser();
-
-            else if (option == 2)
-                option = modifyAccout();
-
-            else if (option == 3)
-                option = accountDetail();
-
-            else if (option == 4)
-                option = depositAmount();
-
-            else if (option == 5)
-                option = withdrawAmount();
-
-            else if (option == 6)
-                option = forgotAccountNumber();
-
-            else if (option == 7)
-                option = exitBank();
-            
-            else
-            {
-                printf("%d, Wrong Option Selected! \n", option);
-                fflush(stdin);
-            }
+        case 1:
+            registerUser();
+            break;
+        case 2:
+            modifyAccout();
+            break;
+        case 3:
+            accountDetail();
+            break;
+        case 4:
+            depositAmount();
+            break;
+        case 5:
+            withdrawAmount();
+            break;
+        case 6:
+            forgotAccountNumber();
+            break;
+        case 7:
+            exitBank();
+            break;
+        default:
+        {
+            printf("\n %d, Wrong Option Selected! \n", option);
+            break;
         }
-    } while (option != (89 || 121)); // 89=Y,121=y
+        }
 
-    return 0;
+    } while (1); // 89=Y,121=y != (89 || 121)
 
-    // [ ERROR! ] printg all execn, after any one execn
-    /* switch (option)
-    {
-    case 1:
-        registerUser();
-    case 2:
-        modifyAccout();
-    case 3:
-        accountDetail();
-    case 4:
-        deposit_amnt();
-    case 5:
-        withdraw_amnt();
-    case 6:
-        exitBank();
-    default:
-    {
-        printf("Wrong Option Selected! \n");
-        goto restart;
-    }
-    } */
+    // return 0;
 }
 
 // FUNCTIONS
@@ -143,12 +123,13 @@ int getAccount()
     printf("\nGetting Account Details...\n");
     char tempName[20];
     int tempAccNum;
-    printf("\nEnter Your Name :  ");
+    printf("\nEnter Your First Name :  ");
     scanf("%s", tempName);
     fflush(stdin);
+    getchar();
     printf("\nDear %s , Enter Your Account Number : ", tempName);
     scanf("%d", &tempAccNum);
-
+    getchar();
     int *baseAccount_Num_Add = &(customer[0].acntNumber);
 
     int index = searchAccount_linear(baseAccount_Num_Add, tempAccNum, accountIndex - 1);
@@ -159,13 +140,14 @@ int getAccount()
 }
 
 // registering new user account
-int registerUser()
+void registerUser()
 {
     printf("\nCreating new Account!\n");
     printf("\nEnter Your Name : ");
     char temp[20];
-    scanf("%s", temp);
+    scanf("%[^\n]s", temp);
     fflush(stdin);
+    getchar();
 
     int index = accountIndex;
     strcpy(customer[index].acntName, temp);
@@ -174,12 +156,12 @@ int registerUser()
     printf("\nYEAH! %s, Your Account has been Created! ,\nYour New Account Number is : %d .\n And Curent Balance is : %d. \n", temp, customer[index].acntNumber, customer[index].acntBalance);
 
     printf("\nEnter anything to continue...");
-    // getchar();
-    return 100;
+    getchar();
+    // return 0;
 }
 
 // check balance
-int accountDetail()
+void accountDetail()
 {
     // printing default customers
     //  for (int i=0; i<3; i++)
@@ -194,8 +176,8 @@ int accountDetail()
     printf("\n\tHello %s, Your Account Number is : %d .\n \tAnd Curent Balance is : %d. \n", customer[index].acntName, customer[index].acntNumber, customer[index].acntBalance);
 
     printf("\nEnter anything to continue...");
-    // getchar();
-    return 100;
+    getchar();
+    // return 0;
 }
 
 // updating
@@ -207,16 +189,20 @@ opt:
     printf("\nWhat you want to modify/update ?\n 1 : Change Name.\n 2 : Remove Your Account.\n 3 : Abort Modification or Exit. \n\nSelect Option : ");
     scanf("%d", &option);
     fflush(stdin);
+    getchar();
     if (option == 1)
     {
         printf("\nChanging Account Name!\n");
         printf("\nEnter Your New Name : \n");
         char temp[20];
-        scanf("%s", temp);
+        scanf("%[^\n]s", temp);
         fflush(stdin);
+        getchar();
         strcpy(customer[index].acntName, temp);
         printf("\nName Changed...\n");
-        return 100;
+        printf("\nEnter anything to continue...");
+        getchar();
+        return 0;
     }
     else if (option == 2)
     {
@@ -226,10 +212,14 @@ opt:
         customer[index].acntBalance = 0;
         index--;
         accountIndex--;
-        return 100;
+        printf("\nEnter anything to continue...");
+        getchar();
+        return 0;
     }
     else if (option == 3)
-        return 100;
+    {
+        return 0;
+    }
     else
     {
         printf("\nWrong option selected...Try again\n");
@@ -237,50 +227,61 @@ opt:
     }
 }
 
-int depositAmount()
+void depositAmount()
 {
     int index = getAccount();
     int deposit;
     printf("\n%s, Enter Amount to Deposit :  ", customer[index].acntName);
     scanf("%d", &deposit);
     fflush(stdin);
+    getchar();
     customer[index].acntBalance += deposit;
     printf("\nYour\'s New Account Balance is : %d.\n", customer[index].acntBalance);
-
     printf("\nEnter anything to continue...");
-    // getchar();
-    return 100;
+    getchar();
+    // return 0;
 }
-int withdrawAmount()
+
+void withdrawAmount()
 {
     int index = getAccount();
     int withdraw;
     printf("\n%s, Enter Amount to Withdraw :  ", customer[index].acntName);
     scanf("%d", &withdraw);
     fflush(stdin);
-    customer[index].acntBalance -= withdraw;
+    getchar();
+    if (customer[index].acntBalance >= withdraw)
+    {
+        customer[index].acntBalance -= withdraw;
+    }
+    else
+    {
+        printf("\nUnable to withdraw ! Due to Unsufficient Account Balance.\n");
+        printf("\nEnter anything to continue...");
+        getchar();
+    }
+
     printf("\nYour\'s Current Account Balance is : %d.\n", customer[index].acntBalance);
 
     printf("\nEnter anything to continue...");
-    // getchar();
-    return 100;
+    getchar();
 }
 
 int exitBank()
 {
-
     printf("Are you Sure, Want to Exit (y/n)? ...");
-    char exitop[2];
-
-    scanf("%s", exitop);
+    char exitop;
+    exitop = getchar();
+    getchar();
+    // printf("%c",exitop);
     fflush(stdin);
-    if (strcmp(exitop, "y") == 0 || strcmp(exitop, "Y") == 0)
+    if (exitop == 'Y' || exitop == 'y')
     {
         printf("\n\t\tGood-Bye!\n\tThank-You For Using Our Bank!\n\n");
         exit(1);
     }
     else
-        return 100;
+        return 0;
 }
 
 int searchAccount_linear(int *bankData, int account_num, int totalAccount)
@@ -311,25 +312,29 @@ int searchAccount_linear(int *bankData, int account_num, int totalAccount)
 // if forgot Accnt num, reset it;
 int forgotAccountNumber()
 {
-    printf("\nResetting Your Account!\n \tVERIYING...\nEnter your name : ");
+    printf("\nResetting Your Account!\n \tVERIYING...\nEnter your FULL Name : ");
     char temp[20];
     scanf("%[^\n]s", temp);
+    getchar();
     char *p;
+    p = (char *)malloc(sizeof(char) * 20);
     for (int i = 0; i <= accountIndex; i++)
     {
-        p = &customer[i].acntName;
-        //printf("\n%s\n", p);
+        strcpy(p, customer[i].acntName);
+        // printf("\n%s\n", p);
         if (strcmp(p, temp) == 0)
         {
             printf("\nAccount Found! \nAccount No. is : %d ,\n", customer[i].acntNumber);
-            return 100;
+            printf("\nEnter anything to continue...");
+            getchar();
+            return 0;
         }
     }
     printf("\nAccount is not Found!...\n");
 
     printf("\nEnter anything to continue...");
-    // getchar();
-    return 100;
+    getchar();
+    return 0;
 }
 
 /*
