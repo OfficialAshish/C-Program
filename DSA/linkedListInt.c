@@ -19,24 +19,37 @@ int main()
     node *pNode = NULL;
 
     pNode = memoAlloc();
-    pNode->num = 2;
+    pNode->num = 1;
     pNode->next = NULL;
     list = pNode;
 
     pNode = memoAlloc();
-    pNode->num = 3;
+    pNode->num = 2;
     pNode->next = NULL;
     list->next=pNode;
 
+    pNode = memoAlloc();
+    pNode->num = 3;
+    pNode->next = NULL;
+    list->next->next=pNode;
 
+    pNode = memoAlloc();
+    pNode->num = 4;
+    pNode->next = NULL;
+    list->next->next->next=pNode;
 
-
-    printf("%d", list->num);
+    int i=0;
+    for (node *tmp  = list; (tmp != NULL) ; tmp = tmp->next )
+    {
+        printf("list[%d] : %d \n",i++, tmp->num);
+    }
+    
     while (list != NULL)
     {
-        node *tmp =list;
+        node *tmp = list->next;
         free(list);
-        list = tmp->next;
+        printf("*");
+        list = tmp;
     }
     return 0;
 }
