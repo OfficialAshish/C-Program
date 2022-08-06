@@ -1,13 +1,14 @@
 
 #include <stdio.h>
+#define DEBUG 0
 #define ARRSIZE 12
 void swap(int *, int *);
-void bubbleSort(int *, int, ...);
+void selectionSort(int *, int, ...);
 
 int main()
 {
     int arr[] = {7, 2, 1, 4, 8, 5, 9, 0, 7, 5, 3, 3};
-    bubbleSort(arr, ARRSIZE, 1); // 1 is optional arg
+    selectionSort(arr, ARRSIZE, 1); // 1 is optional arg
 
     // printing sorted arr
     printf("\n Final :\n   {");
@@ -20,9 +21,8 @@ int main()
     return 0;
 }
 
-void bubbleSort(int *numPoint, int LEN, ...)
+void selectionSort(int *numPoint, int LEN, ...)
 {
-    int cond = 0;
     for (int j = 0; j < LEN - 1; j++)
     {
         for (int i = j + 1; i < LEN; i++)
@@ -35,7 +35,7 @@ void bubbleSort(int *numPoint, int LEN, ...)
             }
         }
         // to print all sorting steps
-        if (cond == 1)
+        if (DEBUG == 1)
         {
             printf("\n {{");
             for (int k = 0; k < LEN; k++)
@@ -57,9 +57,8 @@ void swap(int *a, int *b)
 
 /*
 //ALTERNATIVE (Detailed)
-void bubbleSort(int *numPoint, int LEN ,...)
+void selectionSort(int *numPoint, int LEN ,...)
 {
-    int cond=0;
     for (int j = 0; j < LEN - 1; j++)
     {
         int *minum = (numPoint + j);
@@ -74,7 +73,7 @@ void bubbleSort(int *numPoint, int LEN ,...)
             }
         }
         swap((numPoint + j), minum);
-        if(cond==1)
+        if(DEBUG == 1)
         {
         printf("\n {{");
         for (int k = 0; k < ARRSIZE; k++)

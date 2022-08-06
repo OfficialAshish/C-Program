@@ -3,13 +3,13 @@
 //#define COL 3
 //#define ROW 8
 
-void bubbleSortStr(char *, int, int);
+void selectionSortStr(char *, int, int);
 void swapstr(char * , char * );
 
-//Ex. : bubbleSortStr(&str[0][0], ROW, COL);
+//Ex. : selectionSortStr(&str[0][0], ROW, COL);
 
 //for 2D arrays_strings 
-void bubbleSortStr(char *strPoint, int row, int col)
+void selectionSortStr(char *strPoint, int row, int col)
 {
     for (int i = 0; i < row - 1; i++)
     {
@@ -61,7 +61,7 @@ int main()
 {
     char str[ROW][COL] = {"cb", "ca", "ab", "aa", "ba", "bc", "bb", "ac"};
 
-    bubbleSortStr(&str[0][0], ROW, COL);
+    selectionSortStr(&str[0][0], ROW, COL);
 
     //Printing
     printf("\nSorted Array: \n { ");

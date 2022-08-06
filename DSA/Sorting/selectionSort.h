@@ -1,9 +1,9 @@
 #include <stdio.h>
 
 void swap(int *, int *);
-void bubbleSort(int *, int, ...);
+void selectionSort(int *, int, ...);
 
-void bubbleSort(int *numPoint, int LEN, ...)
+void selectionSort(int *numPoint, int LEN, ...)
 {
     int cond = 0;
     for (int j = 0; j < LEN - 1; j++)
