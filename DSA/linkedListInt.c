@@ -13,8 +13,6 @@ node *memoAlloc();
 int main()
 {
     node *list =NULL;//1D list for struct node type values(pointers)
-    // scanf("%d", list->num);
-    // printf("%d", *list);
 
     node *pNode = NULL;
 
