@@ -92,7 +92,7 @@ int main()
         {
             printf("\n %d, Wrong Option Selected! \n", option);
             break;
-        }sprintf
+        }
         }
 
     } while (1); // 89=Y,121=y != (89 || 121)

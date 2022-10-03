@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-typedef struct stack_usage
+typedef struct stack_
 {
     int index;
     char arr[50];
@@ -13,7 +13,7 @@ stack s;
 void push(stack *, char);
 char pop(stack *);
 void printStack(stack *); // optional
-char topme(stack *);
+char top(stack *);
 
 int main()
 {
@@ -44,7 +44,7 @@ int main()
             printStack(&s);
             break;
         case 4:
-            ch = topme(&s);
+            ch = top(&s);
             printf("\nTop Most Element is : %c .\n", ch);
             break;
         default:
@@ -81,7 +81,7 @@ void printStack(stack *p)
     printf(" }\nPrinted All!\n");
 }
 
-char topme(stack *p)
+char top(stack *p)
 {
     return (p->arr[p->index]);
 }
