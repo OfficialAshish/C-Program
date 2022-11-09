@@ -33,7 +33,7 @@ struct Term *allocTermsDef(int cof)
 void deallocate(struct Term **head)
 {
     struct Term *tmp;
-    while ((*head))
+    while ((head))
     {
         tmp = (*head)->next;
         free((*head));
@@ -58,9 +58,33 @@ struct Term *addition(struct Term *p1_head, struct Term *p2_head)
     p3_head = p3_tmp_trvs;
     while (p1_head || p2_head)
     {
-        if (p1_head->next || p2_head->next)
+        // printf("%d ,, ", p2_head->coeff);
+        if (p1_head->next != NULL || p2_head->next != NULL)
             p3_tmp_trvs->next = allocTermsDef(0);
-        if (p1_head->exp == p2_head->exp)
+        if (p1_head == NULL || p2_head == NULL)
+        {
+            if (!p1_head)
+            {
+                p3_tmp_trvs->coeff = p2_head->coeff;
+                p3_tmp_trvs->exp = p2_head->exp;
+                p2_head = p2_head->next;
+                if (!p2_head)
+                {
+                    break;
+                }
+            }
+            else
+            {
+                p3_tmp_trvs->coeff = p1_head->coeff;
+                p3_tmp_trvs->exp = p1_head->exp;
+                p1_head = p1_head->next;
+                if (!p1_head)
+                {
+                    break;
+                }
+            }
+        }
+        else if (p1_head->exp == p2_head->exp)
         {
             p3_tmp_trvs->coeff = p1_head->coeff + p2_head->coeff;
             p3_tmp_trvs->exp = p1_head->exp;
@@ -83,6 +107,7 @@ struct Term *addition(struct Term *p1_head, struct Term *p2_head)
             }
         }
         p3_tmp_trvs = p3_tmp_trvs->next;
+        // displayPolyn(p3_head);
     }
     return p3_head;
 }
@@ -125,18 +150,34 @@ struct Term *subtraction(struct Term *p1_head, struct Term *p2_head)
 
 void addTerm(struct Term **p_tmpHead, struct Term *newTerm)
 {
+    struct Term *tmpHead = *p_tmpHead; // to avoid modification in real head pointer,creating tmp
     if (!(*p_tmpHead))
     {
         (*p_tmpHead) = (newTerm);
     }
     else
     {
-        struct Term *tmpHead = *p_tmpHead; // to avoid modification in real head pointer,creating tmp
-        while (tmpHead->next)
+        while ((tmpHead->next) && ((newTerm->exp <= tmpHead->next->exp) /* || (newTerm->exp <= tmpHead->exp) */))
         {
             tmpHead = tmpHead->next;
+            // printf("while%d  ");
         }
-        tmpHead->next = newTerm;
+        if ((tmpHead->next == (*p_tmpHead)->next) && (newTerm->exp > tmpHead->exp))
+        {
+            int i = 1;
+            printf("run%d  ", i++);
+            newTerm->next = tmpHead->next;
+            (*p_tmpHead)->next = newTerm;
+        }
+        else if (!(tmpHead->next)) // lst
+        {
+            tmpHead->next = newTerm;
+        }
+        else
+        {
+            newTerm->next = tmpHead->next;
+            tmpHead->next = newTerm;
+        }
     }
 }
 /*
@@ -195,15 +236,15 @@ void creatPoly(struct Term **newPolyn)
 int main(int argc, char const *argv[])
 {
 
-    struct Term t1, t2, t3;
+    struct Term t1, t2, t3, t4;
     struct Term r1, r2, r3;
     struct Term *p1 = NULL, *p2 = NULL;
 
     t1.coeff = 4;
-    t1.exp = 3;
+    t1.exp = 4; // for 1 err
     t1.next = NULL;
     t2.coeff = 3;
-    t2.exp = 2;
+    t2.exp = 3;
     t2.next = NULL;
     t3.coeff = 2;
     t3.exp = 1;
@@ -215,13 +256,13 @@ int main(int argc, char const *argv[])
     // printf("done");
 
     r1.coeff = 5;
-    r1.exp = 3;
+    r1.exp = 4;
     r1.next = NULL;
     r2.coeff = 6;
-    r2.exp = 2;
+    r2.exp = 3;
     r2.next = NULL;
-    r3.coeff = 5;
-    r3.exp = 1;
+    r3.coeff = 2;
+    r3.exp = 1; // 1 for any other error
     r3.next = NULL;
 
     addTerm(&p2, &r1);

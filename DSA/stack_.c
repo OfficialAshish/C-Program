@@ -17,7 +17,7 @@ char top(stack *);
 
 int main()
 {
-    int option = 90;
+    int option = 90; // random
     char ch;
     s.index = -1;
 
@@ -84,4 +84,8 @@ void printStack(stack *p)
 char top(stack *p)
 {
     return (p->arr[p->index]);
+}
+int isEmpty(stack *p)
+{
+    return (p->index == -1);
 }
