@@ -8,11 +8,11 @@ int main()
     {
         for (int i = 0; i < 6; i++)
         {
-            printf("\ni=%d,j=%d,%u, %c\n", i, j, &str[j][i], (str[j][i]));
-            
+            // printf("\ni=%d,j=%d,%u, %c\n", i, j, &str[j][i], (str[j][i]));
+
             printf("\n%c, \n", *((strp + (j * 6) + i)));
-            
-            //printf("\ni=%d,j=%d,%u, %c\n", i, j, &str[j][i], *(str + (j * 6) + i));//error
+
+            // printf("\ni=%d,j=%d,%u, %c\n", i, j, &str[j][i], *(str + (j * 6) + i));//error
         }
     }
     return 0;

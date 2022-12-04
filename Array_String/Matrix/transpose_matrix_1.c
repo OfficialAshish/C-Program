@@ -38,6 +38,7 @@ int main()
     printf("\nTranspose of above Matrix :");
 
     transpose(om, nm);
+    // R C swapped now
     for (int i = 0; i < C; i++)
     {
         printf("\n");
@@ -52,9 +53,9 @@ int main()
 
 void transpose(int om[R][C], int nm[C][R])
 {
-    for (int i = 0; i < C; i++)
+    for (int i = 0; i < R; i++)
     {
-        for (int j = 0; j < R; j++)
+        for (int j = 0; j < C; j++)
         {
             nm[i][j] = om[j][i];
         }

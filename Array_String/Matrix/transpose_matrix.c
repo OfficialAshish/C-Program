@@ -45,7 +45,7 @@ int main()
     */
 
     printf("\nTranspose of above Matrix :");
-    int *mt = transpose(ma[a][b], a, b);
+    int *mt[] = transpose(ma[a][b], a, b);
     for (int i = 0; i < b; i++)
     {
         printf("\n");
