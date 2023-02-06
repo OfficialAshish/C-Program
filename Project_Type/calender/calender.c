@@ -1,7 +1,7 @@
 #include <stdio.h>
 int checkLeapYear(int);
 
-//fucntion to check leap year sas checkLeapYear
+// fucntion to check leap year sas checkLeapYear
 
 int checkLeapYear(int i)
 {
@@ -28,51 +28,51 @@ int main()
         if (checkLeapYear(counter) == 1)
         {
             leapYear += 1;
-            //printf("%d\n\t",counter);
-            //printf("first%d\n\t",leapYear);
+            // printf("%d\n\t",counter);
+            // printf("first%d\n\t",leapYear);
         }
         counter += 4;
     }
-    //printf("final%d\n\t",leapYear);
+    // printf("final%d\n\t",leapYear);
 
     /**/
 
-    //total previous_years days as (tpd)
+    // total previous_years days as (tpd)
     long tpd;
 
-    //days in current year as (cyd)
+    // days in current year as (cyd)
     int cyd;
     cyd = 0;
 
-    //total final days tillnow as (tfd)
+    // total final days tillnow as (tfd)
     long tfd;
 
     tpd = ((yy - 1) * 365) + leapYear;
 
-    //terminate program for these four invalid cases;
+    // terminate program for these four invalid cases;
     if (dd > 29 && mm == 2)
     {
         printf("February cannot have more then 29 day\'s\n");
         return 1;
-        //terminate program
+        // terminate program
     }
     else if (dd == 29 && mm == 2 && checkLeapYear(yy) == 0)
     {
         printf("%d is not a leap year.\n", yy);
         return 1;
-        //terminate program
+        // terminate program
     }
     else if (mm > 12)
     {
         printf("Month cannot be greater then 12\n");
         return 1;
-        //terminate program
+        // terminate program
     }
     else if (dd > 31)
     {
         printf("Date cannot be greater then 31\n");
         return 1;
-        //terminate program
+        // terminate program
     }
 
     else if (mm == 1 && dd <= 31)
@@ -86,12 +86,12 @@ int main()
     }
     else if (mm == 3 && dd <= 31)
     {
-        cyd = 59; //sum of jan& feb
+        cyd = 59; // sum of jan& feb
         cyd = cyd + dd;
     }
     else if (mm == 4 && dd <= 30)
     {
-        cyd = 90; //sum of jan& feb& mar
+        cyd = 90; // sum of jan& feb& mar
         cyd = cyd + dd;
     }
     else if (mm == 5 && dd <= 31)
@@ -135,11 +135,11 @@ int main()
         cyd = cyd + dd;
     }
 
-    //total days
+    // total days
     tfd = tpd + cyd;
-    //printf("\n%ld",tfd);
+    printf("\n%ld", tfd);
 
-    //if current year is leap
+    // if current year is leap
     if (checkLeapYear(yy) == 1 && mm > 2)
     {
         tfd += 1;
@@ -149,9 +149,9 @@ int main()
         tfd += 1;
     }
 
-    //printf("\nTotal days till now:\t%ld\n",tfd);
+    // printf("\nTotal days till now:\t%ld\n",tfd);
 
-    //getting day now
+    // getting day now
     int day;
     day = tfd % 7;
 
@@ -217,7 +217,7 @@ int main()
         c+=4;
     }
     printf("final%d\n\t",leapYear);
-     
+
 
 
     int invalidDate=0;
