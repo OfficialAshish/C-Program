@@ -137,7 +137,7 @@ int main()
 
     // total days
     tfd = tpd + cyd;
-    printf("\n%ld", tfd);
+    printf("\nTotal days: %ld", tfd);
 
     // if current year is leap
     if (checkLeapYear(yy) == 1 && mm > 2)

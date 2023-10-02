@@ -145,7 +145,7 @@ void registerUser()
     printf("\nCreating new Account!\n");
     printf("\nEnter Your Name : ");
     char temp[20];
-    scanf("%s", temp);
+    scanf("%[^\n]s", temp);
     fflush(stdin);
     getchar();
 
@@ -195,7 +195,7 @@ opt:
         printf("\nChanging Account Name!\n");
         printf("\nEnter Your New Name : \n");
         char temp[20];
-        scanf("%s", temp);
+        scanf("%[^\n]s", temp);
         fflush(stdin);
         getchar();
         strcpy(customer[index].acntName, temp);
@@ -314,7 +314,7 @@ int forgotAccountNumber()
 {
     printf("\nResetting Your Account!\n \tVERIYING...\nEnter your FULL Name : ");
     char temp[20];
-    scanf("%s", temp);
+    scanf("%[^\n]s", temp);
     getchar();
     char *p;
     p = (char *)malloc(sizeof(char) * 20);
